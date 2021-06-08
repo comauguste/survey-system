@@ -3,7 +3,7 @@
 @section("content")
     <!--begin::Main-->
     <div class="d-flex flex-column flex-root">
-        <!--begin::Authentication - Sign-up -->
+        <!--begin::Authentication - Password reset -->
         <div class="d-flex flex-column flex-lg-row flex-column-fluid">
             <!--begin::Aside-->
             <div class="d-flex flex-column flex-lg-row-auto bg-primary w-xl-600px">
@@ -34,7 +34,7 @@
                 <!--begin::Content-->
                 <div class="d-flex flex-center flex-column flex-column-fluid">
                     <!--begin::Wrapper-->
-                    <div class="w-lg-600px p-10 p-lg-15 mx-auto">
+                    <div class="w-lg-550px p-10 p-lg-15 mx-auto">
                         @if ($errors->any())
                             <div class="alert alert-danger alert-dismissable">
                                 <strong>Oh snap!</strong><br>
@@ -44,35 +44,24 @@
                             </div>
                     @endif
                     <!--begin::Form-->
-                        <form class="form w-100" novalidate="novalidate" method="POST" action="{{ route('register') }}">
-                        @csrf
-                        <!--begin::Heading-->
-                            <div class="mb-10 text-center">
+                        <form class="form w-100" novalidate="novalidate" method="POST"
+                              action="{{ route('password.update') }}">
+                            @csrf
+
+                            <input type="hidden" name="token" value="{{ $token }}">
+                            <input type="hidden" name="email" value="{{ $email }}">
+                            <!--begin::Heading-->
+                            <div class="text-center mb-10">
                                 <!--begin::Title-->
-                                <h1 class="text-dark mb-3">Create an Account</h1>
+                                <h1 class="text-dark mb-3">Setup New Password</h1>
                                 <!--end::Title-->
                                 <!--begin::Link-->
-                                <div class="text-gray-400 fw-bold fs-4">Already have an account?
-                                    <a href="{{route('login')}}" class="link-primary fw-bolder">Sign in here</a></div>
+                                <div class="text-gray-400 fw-bold fs-4">Already have reset your password ?
+                                    <a href="{{route('login')}}" class="link-primary fw-bolder">Sign in
+                                        here</a></div>
                                 <!--end::Link-->
                             </div>
-                            <!--end::Separator-->
-                            <!--begin::Input group-->
-                            <div class="fv-row mb-7">
-                                <!--begin::Col-->
-                                <label class="form-label fw-bolder text-dark fs-6">Name</label>
-                                <input class="form-control form-control-lg form-control-solid" type="text"
-                                       placeholder="" name="name" value="{{old('name')}}" required autofocus
-                                       autocomplete="name"/>
-                            </div>
-                            <!--end::Input group-->
-                            <!--begin::Input group-->
-                            <div class="fv-row mb-7">
-                                <label class="form-label fw-bolder text-dark fs-6">Email</label>
-                                <input class="form-control form-control-lg form-control-solid" type="email"
-                                       placeholder="" name="email" value="{{old('email')}}" required/>
-                            </div>
-                            <!--end::Input group-->
+                            <!--begin::Heading-->
                             <!--begin::Input group-->
                             <div class="mb-10 fv-row" data-kt-password-meter="true">
                                 <!--begin::Wrapper-->
@@ -83,7 +72,7 @@
                                     <!--begin::Input wrapper-->
                                     <div class="position-relative mb-3">
                                         <input class="form-control form-control-lg form-control-solid" type="password"
-                                               placeholder="" name="password" required autocomplete="new-password"/>
+                                               placeholder="" name="password" autocomplete="off"/>
                                         <span
                                             class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2"
                                             data-kt-password-meter-control="visibility">
@@ -113,23 +102,23 @@
                                 <!--end::Hint-->
                             </div>
                             <!--end::Input group=-->
-                            <!--begin::Input group-->
-                            <div class="fv-row mb-5">
+                            <!--begin::Input group=-->
+                            <div class="fv-row mb-10">
                                 <label class="form-label fw-bolder text-dark fs-6">Confirm Password</label>
                                 <input class="form-control form-control-lg form-control-solid" type="password"
-                                       placeholder="" name="password_confirmation" required
-                                       autocomplete="new-password"/>
+                                       placeholder="" name="password_confirmation" autocomplete="off"/>
                             </div>
-                            <!--end::Input group-->
-                            <!--begin::Actions-->
+                            <!--end::Input group=-->
+                            <!--begin::Action-->
                             <div class="text-center">
-                                <button type="submit" class="btn btn-lg btn-primary">
+                                <button type="submit"
+                                        class="btn btn-lg btn-primary fw-bolder">
                                     <span class="indicator-label">Submit</span>
                                     <span class="indicator-progress">Please wait...
 										<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                 </button>
                             </div>
-                            <!--end::Actions-->
+                            <!--end::Action-->
                         </form>
                         <!--end::Form-->
                     </div>
@@ -139,6 +128,6 @@
             </div>
             <!--end::Body-->
         </div>
-        <!--end::Authentication - Sign-up-->
+        <!--end::Authentication - Password reset-->
     </div>
 @endsection
