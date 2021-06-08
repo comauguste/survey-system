@@ -4,6 +4,9 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\PublicSurveyController;
+use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\SurveyController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -43,4 +46,31 @@ Route::group(['prefix' => 'users'], function () {
     Route::post('/store', [UserController::class, 'store'])->name('users.store');
     Route::post('/update/{user}', [UserController::class, 'update'])->name('users.update');
     Route::get('/delete/{user}', [UserController::class, 'destroy'])->name('users.delete');
+});
+
+
+Route::group(['prefix' => 'survey'], function () {
+    Route::get('/{uuid}', [PublicSurveyController::class, 'show'])->name('public_survey.show');
+    Route::get('/s/{s_link}', [PublicSurveyController::class, 'shareableLink'])->name('public_survey.shareable_link');
+});
+
+Route::group(['prefix' => 'surveys'], function () {
+    Route::get('/', [SurveyController::class, 'index'])->name('surveys');
+
+    Route::get('/{uuid}/run', [SurveyController::class, 'run'])->name('surveys.run');
+    Route::get('/{uuid}/pause', [SurveyController::class, 'pause'])->name('surveys.pause');
+
+    Route::get('/{survey}', [SurveyController::class, 'show'])->name('surveys.show');
+    Route::get('/survey', [SurveyController::class, 'create'])->name('surveys.create');
+    Route::post('/store', [SurveyController::class, 'store'])->name('surveys.store');
+    Route::post('/update/{survey}', [SurveyController::class, 'update'])->name('surveys.update');
+    Route::get('/delete/{survey}', [SurveyController::class, 'destroy'])->name('surveys.delete');
+});
+
+Route::group(['prefix' => 'questions'], function () {
+    Route::get('/{survey}/{q_uuid}', [QuestionController::class, 'show'])->name('questions.show');
+    Route::get('/{uuid}', [QuestionController::class, 'create'])->name('questions.create');
+    Route::post('/store/{survey}', [QuestionController::class, 'store'])->name('questions.store');
+    Route::post('/update/{survey}/{question}', [QuestionController::class, 'update'])->name('questions.update');
+    Route::get('/delete/{survey}/{q_uuid}', [QuestionController::class, 'delete'])->name('questions.delete');
 });
